@@ -4,6 +4,7 @@ const port = 3000;
 const mongoose = require("mongoose");
 
 require("dotenv").config();
+const quisRoute = require("./quisRoute/quisAction")
 
 mongoose.connect(process.env.url_db || 3000, {
 useNewUrlParser: true,
@@ -16,6 +17,7 @@ console.log("tersambung ke db");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", require("./userRoute/register"));
+app.use("quis", quisRoute)
 
 app.get("/", (req, res) => {
 res.send("Hello World");
