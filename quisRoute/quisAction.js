@@ -7,6 +7,7 @@ router.post("/addquis", (req, res) => {
     const quis = new quisSchema();
     quis.judulQuiz = req.body.judulQuiz,
     quis.isiQuiz = req.body.isiQuiz
+    quis.deskripsiQuiz = req.body.deskripsiQuiz
 
     return quis.save((err,payload) => {
         if (err) {
@@ -38,7 +39,8 @@ router.put("/updateQuiz", (req,res) => {
     const id = req.body.id;
     const payload = {
         judulQuiz : req.body.judulQuiz,
-        isiQuiz : req.body.isiQuiz
+        isiQuiz : req.body.isiQuiz,
+        deskripsiQuiz : req.body.deskripsiQuiz
     }
     return quisSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
         if (err) {
