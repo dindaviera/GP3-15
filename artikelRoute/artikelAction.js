@@ -1,16 +1,22 @@
 const mongoose = require("mongoose")
 const express = require("express");
 const artikelSchema = require("../schema/artikelSchema")
+const cloudinary = require("../conf/cloudinary");
+const multer = require("../conf/multer");
 const router = express.Router()
 
-router.post("/postArt", (req, res) => {
+router.post("/postArt", 
+    multer.single("Image"), (req,res) => { 
+    let upload = cloudinary.uploader.upload(req.file.path);
+    upload.then((resultUpload) => {
     const artikel = new artikelSchema();
     artikel.Judul = req.body.Judul,
     artikel.Author = req.body.Author,
     artikel.Tanggal = req.body.Tanggal ,
     artikel.Tag = req.body.Tag,
     artikel.Penerbit = req.body.Penerbit, 
-    artikel.Image = req.body.Image,
+    artikel.Image = resultUpload.secure_url;
+    artikel.cloudinaryId = resultUpload.public_id;
     artikel.Deskripsi = req.body.Deskripsi
 
     return artikel.save((err,payload) => {
@@ -25,7 +31,7 @@ router.post("/postArt", (req, res) => {
             })
         }
     })
-})
+});
 
 router.get("/getArtikel", (req,res) => {
     return artikelSchema.find({}, (err,result) => {
@@ -78,6 +84,6 @@ router.delete("/deleteArt", (req,res) => {
     })
 })
 
-
+});
 
 module.exports = router;
