@@ -1,15 +1,15 @@
 const mongoose = require("mongoose")
 const express = require("express");
-const quisSchema = require("../schema/quisSchema")
+const feedbackSchema = require("../schema/feedbackSchema")
 const router = express.Router()
 
-router.post("/addquis", (req, res) => {
-    const quis = new quisSchema();
-    quis.judulQuiz = req.body.judulQuiz,
-    quis.isiQuiz = req.body.isiQuiz
-    quis.deskripsiQuiz = req.body.deskripsiQuiz
+router.post("/postFeedback", (req, res) => {
+    const feed = new feedbackSchema();
+    feed.namaUser = req.body.namaUser,
+    feed.komentar = req.body.komentar,
+    feed.tanggal = req.body.tanggal
 
-    return quis.save((err,payload) => {
+    return feed.save((err,payload) => {
         if (err) {
             res.json({
                 msg : "Data Gagal Dimasukkan"
@@ -23,8 +23,8 @@ router.post("/addquis", (req, res) => {
     })
 })
 
-router.get("/getAllQuiz", (req,res) => {
-    return quisSchema.find({}, (err,result) => {
+router.get("/getFeedback", (req,res) => {
+    return feedbackSchema.find({}, (err,result) => {
         if (err) {
             res.sendStatus(404)
         } else {
@@ -35,18 +35,14 @@ router.get("/getAllQuiz", (req,res) => {
     })
 })
 
-router.post("/getOneQuiz", (req,res) => {
-    return quisSchema.findOne({_id: req.body.id})
-})
-
-router.put("/updateQuiz", (req,res) => {
+router.put("/updateFeedback", (req,res) => {
     const id = req.body.id;
     const payload = {
-        judulQuiz : req.body.judulQuiz,
-        isiQuiz : req.body.isiQuiz,
-        deskripsiQuiz : req.body.deskripsiQuiz
+        namaUser : req.body.namaUser,
+        komentar : req.body.komentar,
+        tanggal : req.body.tanggal
     }
-    return quisSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
+    return feedbackSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
         if (err) {
             res.json ({
                 msg : "gagal di update"
@@ -60,10 +56,10 @@ router.put("/updateQuiz", (req,res) => {
     })
 })
 
-router.delete("/deleteQuiz", (req,res) => {
+router.delete("/deleteFeedback", (req,res) => {
     const id = req.body.id;
 
-    return quisSchema.findOneAndDelete({_id : id}, (err, result) => {
+    return feedbackSchema.findOneAndDelete({_id : id}, (err, result) => {
         if (err) {
             res.sendStatus(404)
         } else {
