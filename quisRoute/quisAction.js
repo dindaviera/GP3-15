@@ -35,6 +35,10 @@ router.get("/getAllQuiz", (req,res) => {
     })
 })
 
+router.post("/getOneQuiz", (req,res) => {
+    return quisSchema.findOne({_id: req.body.id})
+})
+
 router.put("/updateQuiz", (req,res) => {
     const id = req.body.id;
     const payload = {
