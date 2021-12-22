@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", require("./userRoute/register"));
 app.use("/quis", quisRoute)
 app.use("/artikel", require("./artikelRoute/artikelAction"))
+app.use("/feedback", require("./feedbackRoute/feedbackAction"))
 app.get("/", (req, res) => {
 res.send("Hello World");
 });
