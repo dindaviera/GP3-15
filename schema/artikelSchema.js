@@ -7,6 +7,7 @@ const artikelSchema = new mongoose.Schema({
     Tag : String,
     Penerbit : String, 
     Image: String,
+    cloudinaryId: String,
     Deskripsi : String
 })
 
