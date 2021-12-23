@@ -5,7 +5,7 @@ const cloudinary = require("../conf/cloudinary");
 const multer = require("../conf/multer");
 const router = express.Router()
 
-router.post("/postArt", multer.single("gambarArtikel"), (req,res) => { 
+router.post("/postArt", multer.single("imageArtikel"), (req,res) => { 
     let upload = cloudinary.uploader.upload(req.file.path);
     upload.then((resultUpload) => {
     const artikel = new artikelSchema();
