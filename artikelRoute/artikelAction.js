@@ -5,8 +5,7 @@ const cloudinary = require("../conf/cloudinary");
 const multer = require("../conf/multer");
 const router = express.Router()
 
-router.post("/postArt", 
-    multer.single("Image"), (req,res) => { 
+router.post("/postArt", multer.single("gambarArtikel"), (req,res) => { 
     let upload = cloudinary.uploader.upload(req.file.path);
     upload.then((resultUpload) => {
     const artikel = new artikelSchema();
@@ -45,7 +44,7 @@ router.get("/getArtikel", (req,res) => {
     })
 })
 
-router.put("/updateArt",multer.single("Image") , (req,res) => {
+router.put("/updateArt", multer.single("gambarArtikel") , (req,res) => {
     let upload = cloudinary.uploader.upload(req.file.path)
     upload.then((resultUpload) => {
         const id = req.body.id;
@@ -55,7 +54,8 @@ router.put("/updateArt",multer.single("Image") , (req,res) => {
         Tanggal : req.body.Tanggal ,
         Tag : req.body.Tag,
         Penerbit : req.body.Penerbit, 
-        Image : req.body.Image,
+        Image : resultUpload.secure_url,
+        cloudinaryId : resultUpload.public_id,
         Deskripsi : req.body.Deskripsi
         }
         return artikelSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
