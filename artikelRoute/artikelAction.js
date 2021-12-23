@@ -45,28 +45,31 @@ router.get("/getArtikel", (req,res) => {
     })
 })
 
-router.put("/updateArt", (req,res) => {
-    const id = req.body.id;
-    const payload = {
-    Judul : req.body.Judul,
-    Author : req.body.Author,
-    Tanggal : req.body.Tanggal ,
-    Tag : req.body.Tag,
-    Penerbit : req.body.Penerbit, 
-    Image : req.body.Image,
-    Deskripsi : req.body.Deskripsi
-    }
-    return artikelSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
-        if (err) {
-            res.json ({
-                msg : "data artikel gagal di update"
-            })
-        } else {
-            res.json({
-                msg : "data artikel berhasil di update",
-                result
-            })
+router.put("/updateArt",multer.single("Image") , (req,res) => {
+    let upload = cloudinary.uploader.upload(req.file.path)
+    upload.then((resultUpload) => {
+        const id = req.body.id;
+        const payload = {
+        Judul : req.body.Judul,
+        Author : req.body.Author,
+        Tanggal : req.body.Tanggal ,
+        Tag : req.body.Tag,
+        Penerbit : req.body.Penerbit, 
+        Image : req.body.Image,
+        Deskripsi : req.body.Deskripsi
         }
+        return artikelSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
+            if (err) {
+                res.json ({
+                    msg : "data artikel gagal di update"
+                })
+            } else {
+                res.json({
+                    msg : "data artikel berhasil di update",
+                    result
+                })
+            }
+        })
     })
 })
 
