@@ -512,4 +512,116 @@ Response :
         "msg" : "data berhasil dihapus"
     }
 ```
+## Layanan Atrributes
+
+| Atrributes | Tipe Data | Deksripsi |
+| ------ | ------ | ------ |
+| namaPaket | String | Judul Paket  |
+| hargaLayanan | Number | Berisi harga dari masing masing layanan |
+| deskripsiPaket| Array | Deskripsi singkat tentang layanan |
+| kuotaLayanan | Number | Berisi jumlah kuota peserta per layanan |
+
+# Create Layanan
+Request :
+- Method : POST
+- Endpoint : layanan/createLayanan
+- Header :
+    - Content-Type : application/json
+    - Accept : application/json
+- Body :
+```javascript 
+    {
+        "namaPaket" : "string",
+        "hargaLayanan" : "Number",
+        "deskripsiPaket" : "Array",
+        "kuotaLayanan" : "Number"
+    }
+```
+- Response :
+```javascript
+    {
+        "msg" : "Data Berhasil Dimasukkan",
+        "payload" : {
+            "namaPaket" : "string",
+            "hargaLayanan" : "Number",
+            "deskripsiPaket" : "Array",
+            "kuotaLayanan" : "Number"
+        }
+    }
+```
+
+# Get All Layanan
+Request : 
+- Method : GET
+- Endpoint : /layanan/getAllLayanan
+- Header :
+    - Accept : application/json
+- Response :
+```javascript
+   {
+        "namaPaket" : "string",
+        "hargaLayanan" : "Number",
+        "deskripsiPaket" : "Array",
+        "kuotaLayanan" : "Number"
+    }
+```
+
+# Update Layanan
+Request : 
+- Method : POST
+- Endpoint : /layanan/updateLayanan
+- Header :
+    - Content-Type : application/json
+    - Accept : application/json
+
+Body :
+```javascript
+    {
+        "_id" : "string",
+        "namaPaket" : "string",
+        "hargaLayanan" : "Number",
+        "deskripsiPaket" : "Array",
+        "kuotaLayanan" : "Number"
+    }
+```
+
+Response :
+```javascript
+    {
+        "msg" : "berhasil di update",
+        "result" : {
+             "_id" : "string",
+            "namaPaket" : "string",
+            "hargaLayanan" : "Number",
+            "deskripsiPaket" : "Array",
+            "kuotaLayanan" : "Number"
+        }
+    }
+```
+
+## Delete Layanan
+Request :
+- Method : POST
+- Endpoint : /layanan/deleteLayanan
+- Header : 
+    - Accept: application/json
+
+Body :
+```javascript
+    {
+        "_id" : "string"
+    }
+```
+
+Response :
+```javascript
+    {
+        "msg" : "berhasil dihapus"
+    }
+```
+
+
+```
+
+
 
