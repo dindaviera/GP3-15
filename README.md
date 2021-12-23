@@ -288,7 +288,7 @@ Request :
 Request :
 
 - Method : GET
-- Endpoint : /quis/getAllPsikolog
+- Endpoint : /psikolog/getAllPsikolog
 - Header :
   - Accept : application/json
 
@@ -313,7 +313,7 @@ Response :
 Request :
 
 - Method : GET
-- Endpoint : /quis/getOnePsikolog
+- Endpoint : /psikolog/getOnePsikolog
 - Header :
   - Accept : application/json
 
@@ -346,7 +346,7 @@ Response :
 Request :
 
 - Method : PUT
-- Endpoint : /quis/updatePsikolog
+- Endpoint : /psikolog/updatePsikolog
 - Header :
   - Content-Type : application/json
   - Accept : application/json
@@ -391,7 +391,7 @@ Response :
 Request :
 
 - Method : DELETE
-- Endpoint : /quis/deletePsikolog
+- Endpoint : /psikolog/deletePsikolog
 - Header :
   - Accept: application/json
 
