@@ -8,7 +8,8 @@ const psikologSchema = new mongoose.Schema({
     pengalaman : Number,
     kota : String,
     informasi : String,
-    image : String
+    image : String,
+    cloudinaryId: String,
 })
 
 module.exports = mongoose.model("psikolog", psikologSchema)
