@@ -15,6 +15,7 @@ console.log("tersambung ke db");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true }));
 app.use("/user", require("./userRoute/register"));
 app.use("/quis", require("./quisRoute/quisAction"))
 app.use("/artikel", require("./artikelRoute/artikelAction"))

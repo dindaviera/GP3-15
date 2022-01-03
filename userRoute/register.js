@@ -20,6 +20,7 @@ router.post("/register", multer.single("foto"), (req, res) => {
     userModel.jenis_kelamin = req.body.jenis_kelamin;
     userModel.tanggal_lahir = req.body.tanggal_lahir;
     userModel.foto = resultUpload.secure_url,
+    userModel.role = req.body.role,
     userModel.cloudinaryId = resultUpload.public_id    
 
 
