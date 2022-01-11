@@ -4,8 +4,14 @@ const mongoose = require("mongoose");
 const userSchema = require("../schema/userSchema");
 const bcrypt = require("bcrypt");
 const salt = bcrypt.genSaltSync(10);
+const jwt = require("jsonwebtoken");
+const cloudinary = require("../conf/cloudinary")
+const multer = require("../conf/multer")
 
-router.post("/register", (req, res) => {
+
+router.post("/register", multer.single("foto"), (req, res) => {
+    let upload = cloudinary.uploader.upload(req.file.path)
+    upload.then((resultUpload => {
     const userModel = new userSchema();
     const encryptedPassword = bcrypt.hashSync(req.body.password, salt);
     userModel.username = req.body.username;
@@ -13,7 +19,9 @@ router.post("/register", (req, res) => {
     userModel.email = req.body.email;
     userModel.jenis_kelamin = req.body.jenis_kelamin;
     userModel.tanggal_lahir = req.body.tanggal_lahir;
-    userModel.foto = req.body.foto;
+    userModel.foto = resultUpload.secure_url,
+    userModel.role = req.body.role,
+    userModel.cloudinaryId = resultUpload.public_id    
 
 
     return userModel.save((err, data) => {
@@ -32,12 +40,14 @@ router.post("/register", (req, res) => {
     res.json({
         msg: "ini dari regsiter",
     });
-});
+    }));
+})
+
 
 router.post("/login", (req, res) => {
     payload = {
         username: req.body.username,
-        password: req.body.password,
+        password: req.body.password
     };
 
     userSchema.findOne({ username: payload.username}, (err, result) => {
