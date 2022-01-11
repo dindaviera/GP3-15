@@ -7,8 +7,8 @@ router.post("/createLayanan", (req, res) => {
     const layanan = new layananSchema();
     layanan.namaPaket = req.body.namaPaket;
     layanan.hargaLayanan = req.body.hargaLayanan;
-    layanan.deskripsiPaket = req.body.deskripsiPaket;
-    layanan.kuotaLayanan = req.body.kuotaLayanan;
+    layanan.sesiIndividual = req.body.sesiIndividual;
+    layanan.konsultasi = req.body.konsultasi;
     
     return layanan.save((err, result) => {
         if (err) {
@@ -41,8 +41,8 @@ router.post("/updateLayanan", (req, res) => {
     const payload = {
         namaPaket : req.body.namaPaket,
         hargaLayanan : req.body.hargaLayanan,
-        deskripsiPaket : req.body.deskripsiPaket,
-        kuotaLayanan : req.body.kuotaLayanan
+        sesiIndividual : req.body.sesiIndividual,
+        konsultasi : req.body.konsultasi
     };
     return layananSchema.findOneAndUpdate({ _id:req.body.id },
         payload, (err, result) => {
