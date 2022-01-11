@@ -21,6 +21,7 @@ app.use("/artikel", require("./artikelRoute/artikelAction"))
 app.use("/feedback", require("./feedbackRoute/feedbackAction"))
 app.use("/psikolog", require("./psikologRoute/psikologAction"))
 app.use("/layanan", require("./layananRoute/layanan"))
+app.use("/formlayanan", require("./formlayananRoute/formlayananAction"))
 app.get("/", (req, res) => {
 res.send("Hello World");
 });
