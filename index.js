@@ -15,12 +15,14 @@ console.log("tersambung ke db");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true }));
 app.use("/user", require("./userRoute/register"));
 app.use("/quis", require("./quisRoute/quisAction"))
 app.use("/artikel", require("./artikelRoute/artikelAction"))
 app.use("/feedback", require("./feedbackRoute/feedbackAction"))
 app.use("/psikolog", require("./psikologRoute/psikologAction"))
 app.use("/layanan", require("./layananRoute/layanan"))
+app.use("/formlayanan", require("./formlayananRoute/formlayananAction"))
 app.get("/", (req, res) => {
 res.send("Hello World");
 });

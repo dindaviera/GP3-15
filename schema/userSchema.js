@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
     jenis_kelamin: String,
     tanggal_lahir: Date,
     foto: String,
+    role: String,
+    cloudinaryId : String
 });
 
 module.exports = mongoose.model("user", userSchema);
