@@ -5,7 +5,7 @@ const cloudinary = require("../conf/cloudinary");
 const multer = require("../conf/multer");
 const router = express.Router()
 
-router.post("/postArt", multer.single("imageArtikell"), (req,res) => { 
+router.post("/postArt", multer.single("gmbr"), (req,res) => { 
     let upload = cloudinary.uploader.upload(req.file.path);
     upload.then((resultUpload) => {
     const artikel = new artikelSchema();
@@ -44,7 +44,7 @@ router.get("/getArtikel", (req,res) => {
     })
 })
 
-router.put("/updateArt", multer.single("gambarArtikel") , (req,res) => {
+router.put("/updateArt", multer.single("gmbr") , (req,res) => {
     let upload = cloudinary.uploader.upload(req.file.path)
     upload.then((resultUpload) => {
         const id = req.body.id;
