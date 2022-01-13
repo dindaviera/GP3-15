@@ -1,52 +1,21 @@
 const mongoose = require("mongoose")
 const express = require("express");
 const artikelSchema = require("../schema/artikelSchema")
-const cloudinary = require("../conf/cloudinary");
-const multer = require("../conf/multer");
 const router = express.Router()
-
-router.post("/postArt", multer.single("gmbr"), (req,res) => { 
-    let upload = cloudinary.uploader.upload(req.file.path);
-    upload.then((resultUpload) => {
-    const artikel = new artikelSchema();
-    artikel.Judul = req.body.Judul,
-    artikel.Author = req.body.Author,
-    artikel.Tanggal = req.body.Tanggal ,
-    artikel.Tag = req.body.Tag,
-    artikel.Penerbit = req.body.Penerbit, 
-    artikel.Image = resultUpload.secure_url;
-    artikel.cloudinaryId = resultUpload.public_id;
-    artikel.Deskripsi = req.body.Deskripsi
-
-    return artikel.save((err,payload) => {
-        if (err) {
-            res.json({
-                msg : "Data Artikel Gagal Dimasukkan"
-            })
-        } else {
-            res.json({
-                msg : "Data Artikel berhasil dimasukkan",
-                payload
-            })
-        }
-    })
-});
 
 router.get("/getArtikel", (req,res) => {
     return artikelSchema.find({}, (err,result) => {
-        if (err) {
-            res.sendStatus(404)
-        } else {
-            res.json({
-                result:result
-            })
-        }
-    })
+            if (err) {
+                 res.sendStatus(404)
+             } else {
+                 res.json({
+                     result:result
+                 })
+             }
+         })
 })
 
-router.put("/updateArt", multer.single("gmbr") , (req,res) => {
-    let upload = cloudinary.uploader.upload(req.file.path)
-    upload.then((resultUpload) => {
+router.put("/updateArt", (req,res) => {
         const id = req.body.id;
         const payload = {
         Judul : req.body.Judul,
@@ -55,8 +24,6 @@ router.put("/updateArt", multer.single("gmbr") , (req,res) => {
         Tag : req.body.Tag,
         Penerbit : req.body.Penerbit, 
         Image : resultUpload.secure_url,
-        cloudinaryId : resultUpload.public_id,
-        Deskripsi : req.body.Deskripsi
         }
         return artikelSchema.findOneAndUpdate({_id : req.body.id}, payload, (err, result) => {
             if (err) {
@@ -70,7 +37,7 @@ router.put("/updateArt", multer.single("gmbr") , (req,res) => {
                 })
             }
         })
-    })
+    
 })
 
 router.delete("/deleteArt", (req,res) => {
@@ -87,6 +54,26 @@ router.delete("/deleteArt", (req,res) => {
     })
 })
 
-});
+router.post("/postArt", (req,res) => { 
+    const artikel = new artikelSchema();
+    artikel.Judul = req.body.Judul,
+    artikel.Author = req.body.Author,
+    artikel.Tanggal = req.body.Tanggal ,
+    artikel.Tag = req.body.Tag,
+    artikel.Penerbit = req.body.Penerbit, 
+    artikel.Deskripsi = req.body.Deskripsi
+
+    return artikel.save((err,payload) => {
+        if (err) {
+            res.sendStatus(404)
+        } else {
+            res.json({
+                msg : "Data Artikel berhasil dimasukkan",
+                payload
+            })
+        }
+    })
+})
+
 
 module.exports = router;
