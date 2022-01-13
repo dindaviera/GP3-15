@@ -2,8 +2,8 @@ const mongoose = require("mongoose")
 const express = require("express");
 const formlayananSchema = require("../schema/formlayananSchema")
 const router = express.Router()
+const cors = require("cors");
 const midtransClient = require("midtrans-client");
-const cors = require('cors');
 
 router.post("/addform", (req,res) => {
     const form = new formlayananSchema();
@@ -40,8 +40,23 @@ router.post("/beliLayanan", cors(), (req, res) => {
     let parameter = {
       payment_type: "gopay",
       transaction_details: {
-        gross_amount: 2000, // harga dari yang dibayar sama user, ngikutin harga paket / apapun yang kalian tentuin
-        order_id: "ardaniris", //selalu diganti biar ga tabrakan ( dinamis )
+        gross_amount: req.body.Price, // harga dari yang dibayar sama user, ngikutin harga paket / apapun yang kalian tentuin
+        order_id: req.body.nama + Math.random(), //selalu diganti biar ga tabrakan ( dinamis )
+      },
+      item_details: [
+        // harus ngikutin apa yang dibeli sama user
+        {
+          id: req.body.Layanan, // paket1 / paket2 / paket3* ( req.body.id )
+          price: req.body.Price, // harus dinamis dikirim dari front end* ( req.body.price )
+          quantity: 1, // 1 aja ga usah diganti
+          name: req.body.Layanan, //nama paketnya*
+        },
+      ],
+      customer_details: {
+        first_name: req.body.nama, //isi dari form user yang dikirim* ( req.body.nama )
+        last_name: "", //isi dari form user yang dikirim* ( req.body.nama )
+        email: req.body.email, //isi dari form user yang dikirim* ( req.body.email )
+        phone: req.body.noHP , //isi dari form user yang dikirim* ( req.body.nomerhp )
       },
       gopay: {
         enable_callback: true, // optional kalo mau di redirect sesudahnya
@@ -51,6 +66,7 @@ router.post("/beliLayanan", cors(), (req, res) => {
   
     // charge transaction
     core.charge(parameter).then((chargeResponse) => {
+      console.log(chargeResponse)
       if (chargeResponse) {
         res.send(chargeResponse);
       } else {
